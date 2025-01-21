@@ -1,45 +1,53 @@
-import { StyleSheet, Image, Platform, View, Text, TouchableOpacity, TextInput  } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 10,
+    backgroundColor: 'red',
+    borderRadius: 20, // half of 40 (height + padding)
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
+  },
+});
+
+interface RoundedButtonProps {
+  onPress: () => void;
+}
+
+const RoundedButton: React.FC<RoundedButtonProps> = ({ onPress }) => {
+  return (
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Text style={styles.buttonText}>+</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default function TabTwoScreen() {
-  const [number, setNumber] = useState<string>();
+  const [number, setNumber] = useState('');
 
   const addNUMBER = () => {
-    console.log("i am pressed")
+    console.log("I am pressed");
   } 
 
   const onChangeText = () => {
-
+    // Handle text input change
   }
-  
+
   return (
-    <SafeAreaView  className='flex-1 items-center justify-center bg-red-100 dark:bg-gray-800' edges={['top', 'bottom']}>
-        <Text className="text-xl text-red-500 dark:text-white"> pLEASE ENTER HOW MANY DICE YOU WEANT</Text>
-        <TextInput
-          className='bg-slate-100 px-4 py-2 border border-gray-200 rounded-sm'        
-          onChangeText={onChangeText}
-          placeholder="useless placeholder OWE"
-          value={number}
-        />
-        <TextInput
-          className='bg-slate-100 px-4 py-2 border border-gray-200 rounded-sm'        
-          onChangeText={() => onChangeText()}
-          value={number}
-          placeholder="useless placeholder"
-          keyboardType="numeric"
-        />
-        <TouchableOpacity className='mt-10 px-6 py-3 bg-red-600 rounded-lg'>
-          <Text className="text-lg text-white" onPress={addNUMBER}>Add Number</Text>          
-        </TouchableOpacity>
-    </SafeAreaView >
-    )
-    
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
+      <Text style={{ fontSize: 20, color: 'red' }}>Select the number of dice(s) you wish to play with</Text>
+      <TextInput
+        style={{ backgroundColor: 'gray', padding: 10, borderRadius: 5, marginBottom: 10 }}
+        onChangeText={onChangeText}
+        placeholder="Enter a number"
+        value={number}
+      />
+      <RoundedButton onPress={addNUMBER} />
+    </SafeAreaView>
+  );
 }
