@@ -1,53 +1,46 @@
+import { RoundedButton_V2 } from '@/components/RoundButton';
+import { FontAwesomeIcon } from '@/components/Themed';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const styles = StyleSheet.create({
-  button: {
-    padding: 10,
-    backgroundColor: 'red',
-    borderRadius: 20, // half of 40 (height + padding)
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 20,
-    color: 'white',
-  },
-});
 
-interface RoundedButtonProps {
-  onPress: () => void;
-}
-
-const RoundedButton: React.FC<RoundedButtonProps> = ({ onPress }) => {
-  return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.buttonText}>+</Text>
-    </TouchableOpacity>
-  );
-};
 
 export default function TabTwoScreen() {
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState('0');
 
-  const addNUMBER = () => {
-    console.log("I am pressed");
-  } 
-
-  const onChangeText = () => {
-    // Handle text input change
+  const plus = (a: number) => {
+    const add: number = parseInt(number) + a;
+    setNumber(add.toString())
+    console.log("I am gonna add");
   }
 
+  const minus = (a: number) => {
+    const minus: number = parseInt(number) - a;
+    setNumber(minus.toString())
+    console.log("I am gonna subtract");
+  }
+
+
+
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
-      <Text style={{ fontSize: 20, color: 'red' }}>Select the number of dice(s) you wish to play with</Text>
-      <TextInput
-        style={{ backgroundColor: 'gray', padding: 10, borderRadius: 5, marginBottom: 10 }}
-        onChangeText={onChangeText}
-        placeholder="Enter a number"
-        value={number}
-      />
-      <RoundedButton onPress={addNUMBER} />
+    <SafeAreaView className='flex-1 items-center justify-center bg-primary-100'>
+      <Text className='text-xl text-red-400'>Select the number of dice(s) you wish to play with</Text>
+      <View className="flex-row flex items-center justify-center gap-4">
+        <RoundedButton_V2 icon={['fas', 'plus']} onPress={(x) => plus(x)} value={1} />
+        <TextInput
+          className='text-4xl bg-transparent p-4 rounded-lg w-20 h-20 flex items-center justify-center text-center'
+
+          onChangeText={setNumber}
+          value={number}
+          keyboardType='numeric'
+          readOnly
+        />
+        <RoundedButton_V2 icon={['fas', 'minus']} onPress={(x) => minus(x)} value={1} />
+      </View>
+
+
     </SafeAreaView>
   );
 }
